@@ -3,10 +3,10 @@ package com.meli.challmeli.rest;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.meli.challmeli.model.datacountry.DataCountry;
-import com.meli.challmeli.model.enums.BusinessOperation;
-import com.meli.challmeli.model.exceptions.BusinessException;
+import com.meli.challmeli.model.coin.CoinDTO;
 import com.meli.challmeli.model.geolocation.GeolocationDTO;
+import io.mikael.urlbuilder.UrlBuilder;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -18,39 +18,41 @@ import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
-
-
 @Component
-public class GeolocationInfoRest {
-
-    @Value("${apis.geolocation.geolocationUrl}")
-    String geolocationUrl;
-    @Value("${apis.geolocation.geolocationToken}")
-    String geolocationToken;
+public class CoinInfoRest {
+    @Value("${apis.coinInfo.coinInfoUrl}")
+    private String coinInfoUrl;
+    @Value("${apis.coinInfo.coinInfoToken}")
+    private String coinInfoToken;
     private HttpClient client;
     private ObjectMapper mapper = new ObjectMapper();
 
-    public GeolocationInfoRest() {
-        this.client = HttpClient.newBuilder().connectTimeout(Duration.of(10, ChronoUnit.SECONDS)).build();
+    public CoinInfoRest() {
+        this.client = HttpClient.newBuilder()
+                .connectTimeout(Duration.of(10, ChronoUnit.SECONDS))
+                .build();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
     }
 
-    public GeolocationDTO listIpInfo(String ip){
+
+    public CoinDTO buildCoin(String coin){
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(geolocationUrl + ip +  "?access_key=" + geolocationToken)).GET().build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(coinInfoUrl +  "latest?access_key=" + coinInfoToken + "&symbols=" + coin)).GET().build();
         try {
             HttpResponse<String> respuesta=client.send(request,  HttpResponse.BodyHandlers.ofString());
-       if (respuesta.statusCode() != 200) {
+            if (respuesta.statusCode() != 200) {
                 throw new Exception("Respuesta invalida - response code " + respuesta.statusCode());
             }
-            return new ObjectMapper().readValue(respuesta.body(), GeolocationDTO.class);
+            System.out.println(respuesta.body());
+            return new ObjectMapper().readValue(respuesta.body(), CoinDTO.class);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            throw new RuntimeException("Error obteniendo info de la ip /" + ip , e);
+            throw new RuntimeException("Error obteniendo info del tipo de moneda /" + coin , e);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Error obteniendo info de la ip /" + ip , e);
+            throw new RuntimeException("Error obteniendo info del tipo de moneda /" + coin , e);
         }
     }
+
 }

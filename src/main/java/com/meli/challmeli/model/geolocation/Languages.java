@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-@lombok.Data
+@Data
 public class Languages {
     @JsonProperty("code")
     private String code;
