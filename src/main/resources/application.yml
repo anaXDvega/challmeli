@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: "meli"
+apis:
+    geolocation:
+       geolocationUrl: "http://api.ipapi.com/api/"
+       geolocationToken: "889759f081453c991e2c20d505bac4e5"
+    countryInfo:
+      countryInfoUrl: "http://api.countrylayer.com/v2/name/"
+      countryInfoToken: "83308d348c1f9273801e802d43f8d0dc"
+    countryIo:
+      countryIoUrl: "http://country.io/"
+    coinInfo:
+      coinInfoUrl: "http://data.fixer.io/api/"
+      coinInfoToken: "a317fdd481514d61f8940e9e228001b4"
+#
+#redis:
+#  host: redis
+#  port: 6379
+#  expiration: 300
