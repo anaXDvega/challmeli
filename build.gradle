@@ -21,6 +21,8 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-devtools', version: '2.6.6'
 	compileOnly 'org.projectlombok:lombok'
 	implementation 'com.google.code.gson:gson'
 	implementation 'javax.json:javax.json-api'
