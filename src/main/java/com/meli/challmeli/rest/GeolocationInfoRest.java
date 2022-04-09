@@ -3,9 +3,6 @@ package com.meli.challmeli.rest;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.meli.challmeli.model.datacountry.DataCountry;
-import com.meli.challmeli.model.enums.BusinessOperation;
-import com.meli.challmeli.model.exceptions.BusinessException;
 import com.meli.challmeli.model.geolocation.GeolocationDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -44,6 +41,7 @@ public class GeolocationInfoRest {
        if (respuesta.statusCode() != 200) {
                 throw new Exception("Respuesta invalida - response code " + respuesta.statusCode());
             }
+            System.out.println("Dentro de geolocation>>>> "+respuesta.body());
             return new ObjectMapper().readValue(respuesta.body(), GeolocationDTO.class);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
