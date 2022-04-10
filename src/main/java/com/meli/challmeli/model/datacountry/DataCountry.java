@@ -24,4 +24,5 @@ public class DataCountry{
 //    private List<LocalDateTime> currentTimes;
     private Double distanceToBA;
     private Double coin;
+    private String success;
 }

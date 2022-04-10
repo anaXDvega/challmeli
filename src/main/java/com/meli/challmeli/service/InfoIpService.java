@@ -52,44 +52,44 @@ public class InfoIpService {
     }
 
     public Object buildCountry(String ip) {
-    GeolocationDTO ipInfo = geolocationInfoRest.listIpInfo(ip);
-//        GeolocationDTO geolocationDTO = new GeolocationDTO();
-//        geolocationDTO.setIp("190.173.136.0");
-//        geolocationDTO.setCity("Cucutoski");
-//        geolocationDTO.setCountryName("Colombia");
-//        geolocationDTO.setCountryCode("DE");
-//        geolocationDTO.setRegionName("venezuela");
-//        geolocationDTO.setLatitude(54.55555555555);
-//        geolocationDTO.setLongitude(54.55555555555);
-//        Location location = new Location();
-//        Languages languages = new Languages();
-//        languages.setCode("es");
-//        languages.setName("Spanish");
-//        languages.setNativo("espanol");
-//        Languages languages2 = new Languages();
-//        languages2.setCode("es");
-//        languages2.setName("Spanish");
-//        languages2.setNativo("espanol");
-//        List<Languages> listLanguages=buildList(languages,languages2);
-//        location.setLanguages(listLanguages);
-//        location.setCallingCode("57");
-//        location.setGeonameId("65555555");
-//        geolocationDTO.setLocation(location);
+   // GeolocationDTO ipInfo = geolocationInfoRest.listIpInfo(ip);
+        GeolocationDTO geolocationDTO = new GeolocationDTO();
+        geolocationDTO.setIp("190.173.136.0");
+        geolocationDTO.setCity("Cucutoski");
+        geolocationDTO.setCountryName("Colombia");
+        geolocationDTO.setCountryCode("DE");
+        geolocationDTO.setRegionName("venezuela");
+        geolocationDTO.setLatitude(54.55555555555);
+        geolocationDTO.setLongitude(54.55555555555);
+        Location location = new Location();
+        Languages languages = new Languages();
+        languages.setCode("es");
+        languages.setName("Spanish");
+        languages.setNativo("espanol");
+        Languages languages2 = new Languages();
+        languages2.setCode("es");
+        languages2.setName("Spanish");
+        languages2.setNativo("espanol");
+        List<Languages> listLanguages=buildList(languages,languages2);
+        location.setLanguages(listLanguages);
+        location.setCallingCode("57");
+        location.setGeonameId("65555555");
+        geolocationDTO.setLocation(location);
 
-        return ipInfo.getSuccess()!=null ? buildErrorDataCountry(ipInfo.getError(), "Geolocalizacion") :  validationCoin(ipInfo);
-        //  return geolocationDTO.getSuccess()!=null ? buildErrorDataCountry(geolocationDTO.getError(), "Geolocalizacion") :  validationCoin(geolocationDTO);
+        //  return ipInfo.getSuccess()!=null ? buildErrorDataCountry(ipInfo.getError(), "Geolocalizacion") :  validationCoin(ipInfo);
+       return geolocationDTO.getSuccess()!=null ? buildErrorDataCountry(geolocationDTO.getError(), "Geolocalizacion") :  validationCoin(geolocationDTO);
     }
     private String getonCountryIo(String json, String countryCode){
         return codCountryRest.callOnCountryIo(json, countryCode);
     }
     private Object validationCoin(GeolocationDTO ipInfo){
         String countryCurrencyCode = getonCountryIo("currency.json", ipInfo.getCountryCode());
-        var coin = coinInfoRest.buildCoin(countryCurrencyCode.equals("EUR") ? "USD" : countryCurrencyCode);
-//        CoinDTO coin = new CoinDTO();
-//        coin.setSuccess("true");
-//        coin.setRates("{\"COP\":121.989028}");
-         return coin.getSuccess().equals("false") ? buildErrorDataCountry(coin.getError(), "Conversion de moneda") : buildDataCountry(ipInfo,  countryCurrencyCode, coin);
-        //  return buildDataCountry(ipInfo,  countryCurrencyCode, coin);
+    //    var coin = coinInfoRest.buildCoin(countryCurrencyCode.equals("EUR") ? "USD" : countryCurrencyCode);
+        CoinDTO coin = new CoinDTO();
+        coin.setSuccess("true");
+        coin.setRates("{\"COP\":121.989028}");
+      //   return coin.getSuccess().equals("false") ? buildErrorDataCountry(coin.getError(), "Conversion de moneda") : buildDataCountry(ipInfo,  countryCurrencyCode, coin);
+         return buildDataCountry(ipInfo,  countryCurrencyCode, coin);
     }
     private Double convertJsonToString(Object coin, String countryCurrencyCode){
         JSONObject objetoJson = new JSONObject(coin);
@@ -112,8 +112,9 @@ public class InfoIpService {
         dataCountry.setLongitude(ipInfo.getLongitude());
         dataCountry.setGeonameId(ipInfo.getLocation().getGeonameId());
         dataCountry.setCoinToConvert(countryCurrencyCode.equals("EUR") ? "USD" : "EUR");
-        dataCountry.setCoin(convertJsonToString(coin,countryCurrencyCode.equals("EUR") ? "USD" : countryCurrencyCode));
-        //dataCountry.setCoin(40000.0);
+       // dataCountry.setCoin(convertJsonToString(coin,countryCurrencyCode.equals("EUR") ? "USD" : countryCurrencyCode));
+        dataCountry.setSuccess("true");
+        dataCountry.setCoin(40000.0);
         dataCountry.setDistanceToBA(!ipInfo.getRegionName().equals("Buenos Aires") ? DistanceCalculator.distance(ipInfo.getLatitude(), ipInfo.getLongitude()) : 0);
 
 
@@ -122,6 +123,7 @@ public class InfoIpService {
     }
     private ErrorDataCountry buildErrorDataCountry(Error ipInfo, String module){
         ErrorDataCountry errorDataCountry = new ErrorDataCountry();
+        errorDataCountry.setSuccess("false");
         errorDataCountry.setCode(ipInfo.getCode());
         errorDataCountry.setType(ipInfo.getType());
         errorDataCountry.setInfo(ipInfo.getInfo());
@@ -135,12 +137,14 @@ public class InfoIpService {
         distancebuild.setCity(dataCountry.getCity());
         distancebuild.setDistance(Double.valueOf(dataCountry.getDistanceToBA()));
         distancebuild.setCountry(dataCountry.getCountry());
-        distancebuild.setInvocations(!getIfExists.isEmpty() ? getIfExists.get().getInvocations()+1 :  1);
-        findStadisctis(distancebuild);
-        return distanceRepository.save(distancebuild);
+        distancebuild.setInvocations(!getIfExists.isEmpty() ? getIfExists.get().getInvocations()+ 1 :  1);
+        Distance distance = distanceRepository.save(distancebuild);
+        findStadisctis(distance);
+        return distance;
     }
     private DataStatistics convertToItem(Map<String, ?> item) {
         DataStatistics dataStatistics = new DataStatistics();
+        dataStatistics.setId(1);
         dataStatistics.setAverage((Double) item.get("average"));
         dataStatistics.setCantInvocations(((BigInteger)  item.get("cantInvocations")).intValue());
         dataStatistics.setMax((Double) item.get("max"));
@@ -154,6 +158,7 @@ public class InfoIpService {
     }
 
     private DataStatistics updateStatistics(DataStatistics dataStatistics, Distance distance) {
+        System.out.println("dentro de update");
         var sumDistances = dataStatistics.getAverage() * dataStatistics.getCantInvocations() + distance.getDistance();
         var cant = dataStatistics.getCantInvocations() + 1;
         var average = sumDistances / cant;
@@ -163,14 +168,15 @@ public class InfoIpService {
         dataStatisticsUpdate.setMax(dataStatistics.getMax() > distance.getDistance() ? dataStatistics.getMax() : distance.getDistance());
         dataStatisticsUpdate.setMin(dataStatistics.getMin() < distance.getDistance() ? dataStatistics.getMin() : distance.getDistance());
         dataStatisticsUpdate.setAverage(average);
-        return dataStatisticsUpdate;
+        return statisticsRepository.save(dataStatisticsUpdate);
 
     }
 
     public Object findStadisctis(Distance find){
         System.out.println("dentro de findStadisctis");
         Optional<DataStatistics> findStadisctis = statisticsRepository.findById(1);
-         if (findStadisctis.isEmpty() || findStadisctis.get().getMin() == null){
+        System.out.println(findStadisctis);
+         if (findStadisctis.isEmpty()){
            return convertToItem(distanceRepository.averageDistanceToBuenosAires());
         }else{
          return updateStatistics(findStadisctis.get(), find);

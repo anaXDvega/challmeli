@@ -3,8 +3,6 @@ h
 8src/main/java/com/meli/challmeli/model/coin/CoinDTO.java,4\4\44b2a70b70d7e7bf7212254f19d3685a3cfdf27f
 k
 ;src/main/java/com/meli/challmeli/model/ErrorData/Error.java,9\2\92cacad749f4b689c0ace18046badfd6f99316c3
-x
-Hsrc/main/java/com/meli/challmeli/model/datacountry/ErrorDataCountry.java,e\5\e5694bbd4dd1e039d8b13a42cb4d640dc69d71b0
 q
 Asrc/main/java/com/meli/challmeli/model/geolocation/Languages.java,5\1\51b3f638413f03a21a26f954c7202acb18c1f6b0
 i

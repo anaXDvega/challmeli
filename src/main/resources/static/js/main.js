@@ -33,6 +33,8 @@ fetchAPI(url).then(data => {
 
   }
     function buildDataCountry(data){
+    console.log(data);
+    if(data.success=="true"){
     const tiempoTranscurrido = Date.now();
     const hoy = new Date(tiempoTranscurrido);
     var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
@@ -40,6 +42,9 @@ fetchAPI(url).then(data => {
        data.isoCode+"<br/> Idiomas: "+buildIdiomas(data.languages)+ " <br/> Moneda: "+ data.countryCurrencyCode +
        " (1 "+  getCoinToConvert(data.coinToConvert) +" = "+data.coin + getCountryCurrencyCode(data.countryCurrencyCode) +")<br/> Distancia estimada: "
        + data.distanceToBA + "kms (-34.687400817871094, -58.56330108642578) a ("+data.latitude+","+ data.longitude+ ")</p>");
+       }else{
+        $('#resultadoIp').append("<p>Codigo de error:"+data.code+"<br/> Info del error: "+data.info +"<br/> Modulo:" + data.module+"<br/> Tipo: "+data.type+"</p>");
+       }
     }
  function getCoinToConvert(data){
  if(data=="USD"){return "EUR";}else{return data}
@@ -55,7 +60,6 @@ if(languages.length>0){
            }
 }
 return retorna;
-console.log(languages.length);
 }
 function getData(){
  $("#textOutData").hide();
