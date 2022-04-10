@@ -1,6 +1,6 @@
 package com.meli.challmeli.util;
 
-public class IpValidate {
+public class ValidateIP {
     public static boolean validateIPAddress(String ipAddress) {
         String[] tokens = ipAddress.split("\\.");
         if (tokens.length != 4) {

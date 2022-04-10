@@ -1,4 +1,5 @@
 package com.meli.challmeli.service;
+
 import com.meli.challmeli.model.distance.Distance;
 import com.meli.challmeli.model.ErrorData.Error;
 import com.meli.challmeli.model.coin.CoinDTO;
@@ -6,32 +7,30 @@ import com.meli.challmeli.model.datacountry.DataCountry;
 import com.meli.challmeli.model.datacountry.ErrorDataCountry;
 import com.meli.challmeli.model.datastatistics.DataStatistics;
 import com.meli.challmeli.model.geolocation.GeolocationDTO;
-import com.meli.challmeli.model.geolocation.Languages;
-import com.meli.challmeli.model.geolocation.Location;
 import com.meli.challmeli.repository.distance.DistanceRepository;
 import com.meli.challmeli.repository.statistics.StatisticsRepository;
-import com.meli.challmeli.rest.CodCountryRest;
+import com.meli.challmeli.rest.CountryIo;
 import com.meli.challmeli.rest.CoinInfoRest;
 import com.meli.challmeli.rest.GeolocationInfoRest;
+import com.meli.challmeli.service.datacountry.DataCountryService;
+import com.meli.challmeli.service.distance.DistanceService;
+import com.meli.challmeli.service.statistics.StatisticsService;
 import com.meli.challmeli.util.CalculateDistance;
-import com.meli.challmeli.util.IpValidate;
-import org.json.JSONObject;
+import com.meli.challmeli.util.ValidateIP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
+
+import static com.meli.challmeli.util.StringUtil.convertJsonToString;
 
 @Service
 public class InfoIpService {
     @Autowired
     GeolocationInfoRest geolocationInfoRest;
     @Autowired
-    CodCountryRest codCountryRest;
+    CountryIo countryIo;
 
     @Autowired
     CoinInfoRest coinInfoRest;
@@ -42,67 +41,42 @@ public class InfoIpService {
     @Autowired
     StatisticsRepository statisticsRepository;
 
+    @Autowired
+    StatisticsService statisticsService;
+
+    @Autowired
+    DistanceService distanceService;
+
+    @Autowired
+    DataCountryService dataCountryService;
+
     public Object countryInfoComplete(String ip) {
-        if(!IpValidate.validateIPAddress(ip)){
+        if (!ValidateIP.validateIPAddress(ip)) {
             throw new RuntimeException("La ip ingresada no es correcta");
         }
-        System.out.println("dentto");
         return buildCountry(ip);
     }
-
     public Object buildCountry(String ip) {
-   // GeolocationDTO ipInfo = geolocationInfoRest.listIpInfo(ip);
-        GeolocationDTO geolocationDTO = new GeolocationDTO();
-        geolocationDTO.setIp("190.173.136.0");
-        geolocationDTO.setCity("Cucutoski");
-        geolocationDTO.setCountryName("Colombia");
-        geolocationDTO.setCountryCode("DE");
-        geolocationDTO.setRegionName("venezuela");
-        geolocationDTO.setLatitude(54.55555555555);
-        geolocationDTO.setLongitude(54.55555555555);
-        Location location = new Location();
-        Languages languages = new Languages();
-        languages.setCode("es");
-        languages.setName("Spanish");
-        languages.setNativo("espanol");
-        Languages languages2 = new Languages();
-        languages2.setCode("es");
-        languages2.setName("Spanish");
-        languages2.setNativo("espanol");
-        List<Languages> listLanguages=buildList(languages,languages2);
-        location.setLanguages(listLanguages);
-        location.setCallingCode("57");
-        location.setGeonameId("65555555");
-        geolocationDTO.setLocation(location);
-
-        //  return ipInfo.getSuccess()!=null ? buildErrorDataCountry(ipInfo.getError(), "Geolocalizacion") :  validationCoin(ipInfo);
-       return geolocationDTO.getSuccess()!=null ? buildErrorDataCountry(geolocationDTO.getError(), "Geolocalizacion") :  validationCoin(geolocationDTO);
+        GeolocationDTO ipInfo = geolocationInfoRest.listIpInfo(ip);
+        return ipInfo.getSuccess() != null ? buildErrorDataCountry(ipInfo.getError(), "Geolocalizacion") : validationCoin(ipInfo);
     }
-    private String getonCountryIo(String json, String countryCode){
-        return codCountryRest.callOnCountryIo(json, countryCode);
+    private Object validationCoin(GeolocationDTO ipInfo) {
+        String countryCurrencyCode = getOnCountryIo("currency.json", ipInfo.getCountryCode());
+        var coin = coinInfoRest.buildCoin(countryCurrencyCode.equals("EUR") ? "USD" : countryCurrencyCode);
+        return coin.getSuccess().equals("false") ? buildErrorDataCountry(coin.getError(), "Conversion de moneda") : buildDataCountry(ipInfo, countryCurrencyCode, coin);
     }
-    private Object validationCoin(GeolocationDTO ipInfo){
-        String countryCurrencyCode = getonCountryIo("currency.json", ipInfo.getCountryCode());
-    //    var coin = coinInfoRest.buildCoin(countryCurrencyCode.equals("EUR") ? "USD" : countryCurrencyCode);
-        CoinDTO coin = new CoinDTO();
-        coin.setSuccess("true");
-        coin.setRates("{\"COP\":121.989028}");
-      //   return coin.getSuccess().equals("false") ? buildErrorDataCountry(coin.getError(), "Conversion de moneda") : buildDataCountry(ipInfo,  countryCurrencyCode, coin);
-         return buildDataCountry(ipInfo,  countryCurrencyCode, coin);
+    private String getOnCountryIo(String json, String countryCode) {
+        System.out.println(json + countryCode);
+        return countryIo.callOnCountryIo(json, countryCode);
     }
-    private Double convertJsonToString(Object coin, String countryCurrencyCode){
-        JSONObject objetoJson = new JSONObject(coin);
-        JSONObject moneda = objetoJson.getJSONObject("rates");
-        return (Double) moneda.get(countryCurrencyCode);
-    }
-    private DataCountry buildDataCountry(GeolocationDTO ipInfo, String  countryCurrencyCode, CoinDTO coin){
+    public DataCountry buildDataCountry(GeolocationDTO ipInfo, String countryCurrencyCode, CoinDTO coin) {
         LocalDateTime localDateTimeInUTC = LocalDateTime.now();
         DataCountry dataCountry = new DataCountry();
         dataCountry.setIp(ipInfo.getIp());
         dataCountry.setCity(ipInfo.getCity());
         dataCountry.setCountry(ipInfo.getCountryName());
         dataCountry.setCode(ipInfo.getCountryCode());
-        dataCountry.setIsoCode(getonCountryIo("iso3.json", ipInfo.getCountryCode()));
+        dataCountry.setIsoCode(getOnCountryIo("iso3.json", ipInfo.getCountryCode()));
         dataCountry.setLanguages(ipInfo.getLocation().getLanguages());
         dataCountry.setCountryCurrencyCode(countryCurrencyCode);
         dataCountry.setCodeCountry(ipInfo.getLocation().getCallingCode());
@@ -111,16 +85,15 @@ public class InfoIpService {
         dataCountry.setLongitude(ipInfo.getLongitude());
         dataCountry.setGeonameId(ipInfo.getLocation().getGeonameId());
         dataCountry.setCoinToConvert(countryCurrencyCode.equals("EUR") ? "USD" : "EUR");
-       // dataCountry.setCoin(convertJsonToString(coin,countryCurrencyCode.equals("EUR") ? "USD" : countryCurrencyCode));
+        dataCountry.setCoin(convertJsonToString(coin, countryCurrencyCode.equals("EUR") ? "USD" : countryCurrencyCode));
         dataCountry.setSuccess("true");
-        dataCountry.setCoin(40000.0);
         dataCountry.setDistanceToBA(!ipInfo.getRegionName().equals("Buenos Aires") ? CalculateDistance.distance(ipInfo.getLatitude(), ipInfo.getLongitude()) : 0);
-
-
-        buildDistance(dataCountry);
+        Distance resultDistance = distanceService.buildDistance(dataCountry);
+        statisticsRepository.save(findStatistics(resultDistance));
         return dataCountry;
     }
-    private ErrorDataCountry buildErrorDataCountry(Error ipInfo, String module){
+
+    private ErrorDataCountry buildErrorDataCountry(Error ipInfo, String module) {
         ErrorDataCountry errorDataCountry = new ErrorDataCountry();
         errorDataCountry.setSuccess("false");
         errorDataCountry.setCode(ipInfo.getCode());
@@ -129,65 +102,8 @@ public class InfoIpService {
         errorDataCountry.setModule(module);
         return errorDataCountry;
     }
-    private Distance buildDistance(DataCountry dataCountry) {
-        var getIfExists = distanceRepository.findById(Integer.valueOf(dataCountry.getGeonameId()));
-        Distance distancebuild = new Distance();
-        distancebuild.setGeonameId(Integer.valueOf(dataCountry.getGeonameId()));
-        distancebuild.setCity(dataCountry.getCity());
-        distancebuild.setDistance(Double.valueOf(dataCountry.getDistanceToBA()));
-        distancebuild.setCountry(dataCountry.getCountry());
-        distancebuild.setInvocations(!getIfExists.isEmpty() ? getIfExists.get().getInvocations()+ 1 :  1);
-        Distance distance = distanceRepository.save(distancebuild);
-        findStadisctis(distance);
-        return distance;
-    }
-    private DataStatistics convertToItem(Map<String, ?> item) {
-        DataStatistics dataStatistics = new DataStatistics();
-        dataStatistics.setId(1);
-        dataStatistics.setAverage((Double) item.get("average"));
-        dataStatistics.setCantInvocations(((BigInteger)  item.get("cantInvocations")).intValue());
-        dataStatistics.setMax((Double) item.get("max"));
-        dataStatistics.setMin((Double) item.get("min"));
-        return statisticsRepository.save(dataStatistics);
-    }
-
-    public Iterable<Distance> findAllDistance(){
-        Iterable<Distance> find = distanceRepository.findAll();
-        return find;
-    }
-
-    private DataStatistics updateStatistics(DataStatistics dataStatistics, Distance distance) {
-        System.out.println("dentro de update");
-        var sumDistances = dataStatistics.getAverage() * dataStatistics.getCantInvocations() + distance.getDistance();
-        var cant = dataStatistics.getCantInvocations() + 1;
-        var average = sumDistances / cant;
-        DataStatistics dataStatisticsUpdate = new DataStatistics();
-        dataStatisticsUpdate.setId(1);
-        dataStatisticsUpdate.setCantInvocations(cant);
-        dataStatisticsUpdate.setMax(dataStatistics.getMax() > distance.getDistance() ? dataStatistics.getMax() : distance.getDistance());
-        dataStatisticsUpdate.setMin(dataStatistics.getMin() < distance.getDistance() ? dataStatistics.getMin() : distance.getDistance());
-        dataStatisticsUpdate.setAverage(average);
-        return statisticsRepository.save(dataStatisticsUpdate);
-
-    }
-
-    public Object findStadisctis(Distance find){
-        System.out.println("dentro de findStadisctis");
-        Optional<DataStatistics> findStadisctis = statisticsRepository.findById(1);
-        System.out.println(findStadisctis);
-         if (findStadisctis.isEmpty()){
-           return convertToItem(distanceRepository.averageDistanceToBuenosAires());
-        }else{
-         return updateStatistics(findStadisctis.get(), find);
-        }
-    }
-    private List<Languages> buildList(Object... args) {
-        List<Languages> languages = new ArrayList<>();
-        for (Object object : args) {
-            if (object instanceof Languages) {
-                languages.add((Languages) object);
-            }
-        }
-        return languages;
+    public DataStatistics findStatistics(Distance find) {
+        Optional<DataStatistics> findStatistics = statisticsRepository.findById(1);
+        return findStatistics.isEmpty() ? statisticsService.convertToItem(distanceRepository.averageDistanceToBuenosAires()) : statisticsService.updateStatistics(findStatistics.get(), find);
     }
 }

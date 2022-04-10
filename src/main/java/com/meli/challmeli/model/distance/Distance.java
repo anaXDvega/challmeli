@@ -1,5 +1,4 @@
 package com.meli.challmeli.model.distance;
-
 import lombok.Getter;
 import lombok.Setter;
 

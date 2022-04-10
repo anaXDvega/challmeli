@@ -16,19 +16,20 @@ import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 @Component
-public class CodCountryRest {
+public class CountryIo {
     @Value("${apis.countryIo.countryIoUrl}")
     String countryInfoUrl;
     HttpClient client;
     ObjectMapper mapper = new ObjectMapper();
 
-    public CodCountryRest() {
+    public CountryIo() {
         this.client = HttpClient.newBuilder()
                 .connectTimeout(Duration.of(10, ChronoUnit.SECONDS))
                 .build();
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
     }
+
     public String callOnCountryIo(String path,String codCurrency){
         URI uri = UrlBuilder.empty().fromString(countryInfoUrl + path).toUri();
         try {

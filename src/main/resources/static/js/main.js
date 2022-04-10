@@ -17,6 +17,7 @@ fetchAPI(url).then(data => {
   }
   function recargo(){
     $("#resultadoIp").empty();
+    $("#statistics").empty();
   	$("#tbody").empty();
   	$("#thead").empty();
   	getData();
