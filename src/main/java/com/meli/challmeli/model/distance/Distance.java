@@ -1,6 +1,5 @@
 package com.meli.challmeli.model.distance;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +10,9 @@ import javax.persistence.Table;
 @Table
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Distance {
     @Id
     @Column

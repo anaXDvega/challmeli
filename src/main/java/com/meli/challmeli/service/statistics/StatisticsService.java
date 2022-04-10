@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class StatisticsService {
@@ -17,19 +18,15 @@ public class StatisticsService {
     public DataStatistics save(DataStatistics dataStatistics){
         return statisticsRepository.save(dataStatistics);
     }
-
+    public Optional<DataStatistics> findById(Integer id){
+        return statisticsRepository.findById(id);
+    }
     public Iterable<DataStatistics> findAllDistance(){
         return  statisticsRepository.findAll();
     }
 
     public DataStatistics convertToItem(Map<String, ?> item) {
-        DataStatistics dataStatistics = new DataStatistics();
-        dataStatistics.setId(1);
-        dataStatistics.setAverage((Double) item.get("average"));
-        dataStatistics.setCantInvocations(((BigInteger)  item.get("cantInvocations")).intValue());
-        dataStatistics.setMax((Double) item.get("max"));
-        dataStatistics.setMin((Double) item.get("min"));
-        return dataStatistics;
+        return new DataStatistics(1,(Double) item.get("average"),(Double) item.get("min"),(Double) item.get("max"),((BigInteger)  item.get("cantInvocations")).intValue());
     }
 
     public DataStatistics updateStatistics(DataStatistics dataStatistics, Distance distance) {

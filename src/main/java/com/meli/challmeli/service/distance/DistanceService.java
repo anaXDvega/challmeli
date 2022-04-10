@@ -6,6 +6,8 @@ import com.meli.challmeli.repository.distance.DistanceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 public class DistanceService {
     @Autowired
@@ -16,14 +18,16 @@ public class DistanceService {
         return  distanceRepository.findAll();
     }
 
+    public Map<String, ?> averageDistanceToBuenosAires(){return distanceRepository.averageDistanceToBuenosAires();}
+
+
     public Distance buildDistance(DataCountry dataCountry) {
         var getIfExists = distanceRepository.findById(Integer.valueOf(dataCountry.getGeonameId()));
-        Distance distance = new Distance();
-        distance.setGeonameId(Integer.valueOf(dataCountry.getGeonameId()));
-        distance.setCity(dataCountry.getCity());
-        distance.setDistance(Double.valueOf(dataCountry.getDistanceToBA()));
-        distance.setCountry(dataCountry.getCountry());
-        distance.setInvocations(!getIfExists.isEmpty() ? getIfExists.get().getInvocations()+ 1 :  1);
+         Distance distance = Distance.builder().geonameId(Integer.valueOf(dataCountry.getGeonameId()))
+                .country(dataCountry.getCountry())
+                .city(dataCountry.getCity())
+                .distance(Double.valueOf(dataCountry.getDistanceToBA()))
+                .invocations(!getIfExists.isEmpty() ? getIfExists.get().getInvocations()+ 1 :  1).build();
         Distance resultDistance = distanceRepository.save(distance);
         return resultDistance;
     }

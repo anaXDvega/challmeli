@@ -7,8 +7,6 @@ import com.meli.challmeli.model.datacountry.DataCountry;
 import com.meli.challmeli.model.datacountry.ErrorDataCountry;
 import com.meli.challmeli.model.datastatistics.DataStatistics;
 import com.meli.challmeli.model.geolocation.GeolocationDTO;
-import com.meli.challmeli.repository.distance.DistanceRepository;
-import com.meli.challmeli.repository.statistics.StatisticsRepository;
 import com.meli.challmeli.rest.CountryIo;
 import com.meli.challmeli.rest.CoinInfoRest;
 import com.meli.challmeli.rest.GeolocationInfoRest;
@@ -24,26 +22,24 @@ import java.util.Optional;
 public class InfoIpService {
     @Autowired
     GeolocationInfoRest geolocationInfoRest;
+
     @Autowired
     CountryIo countryIo;
 
     @Autowired
     CoinInfoRest coinInfoRest;
 
-    @Autowired
-    DistanceRepository distanceRepository;
-
-    @Autowired
-    StatisticsRepository statisticsRepository;
-
-    @Autowired
     StatisticsService statisticsService;
 
-    @Autowired
     DistanceService distanceService;
 
-    @Autowired
     DataCountryService dataCountryService;
+
+    public InfoIpService(StatisticsService statisticsService, DistanceService distanceService, DataCountryService dataCountryService) {
+        this.statisticsService = statisticsService;
+        this.distanceService = distanceService;
+        this.dataCountryService = dataCountryService;
+    }
 
     public Object countryInfoComplete(String ip) {
         if (!ValidateIP.validateIPAddress(ip)) {
@@ -66,22 +62,16 @@ public class InfoIpService {
     public DataCountry buildDataCountry(GeolocationDTO ipInfo, String countryCurrencyCode, CoinDTO coin) {
         DataCountry dataCountry = dataCountryService.buildDataCountry(ipInfo,countryCurrencyCode, coin);
         Distance resultDistance = distanceService.buildDistance(dataCountry);
-        statisticsRepository.save(findStatistics(resultDistance));
+        statisticsService.save(findStatistics(resultDistance));
         return dataCountry;
     }
 
     private ErrorDataCountry buildErrorDataCountry(Error ipInfo, String module) {
-        ErrorDataCountry errorDataCountry = new ErrorDataCountry();
-        errorDataCountry.setSuccess("false");
-        errorDataCountry.setCode(ipInfo.getCode());
-        errorDataCountry.setType(ipInfo.getType());
-        errorDataCountry.setInfo(ipInfo.getInfo());
-        errorDataCountry.setModule(module);
-        return errorDataCountry;
+        return new ErrorDataCountry("false",ipInfo.getCode(),ipInfo.getType(),ipInfo.getInfo(),module);
     }
 
     public DataStatistics findStatistics(Distance find) {
-        Optional<DataStatistics> findStatistics = statisticsRepository.findById(1);
-        return findStatistics.isEmpty() ? statisticsService.convertToItem(distanceRepository.averageDistanceToBuenosAires()) : statisticsService.updateStatistics(findStatistics.get(), find);
+        Optional<DataStatistics> findStatistics = statisticsService.findById(1);
+        return findStatistics.isEmpty() ? statisticsService.convertToItem(distanceService.averageDistanceToBuenosAires()) : statisticsService.updateStatistics(findStatistics.get(), find);
     }
 }
