@@ -24,8 +24,8 @@ public class GeolocationInfoRest {
     String geolocationUrl;
     @Value("${apis.geolocation.geolocationToken}")
     String geolocationToken;
-    private HttpClient client;
-    private ObjectMapper mapper = new ObjectMapper();
+    HttpClient client;
+    ObjectMapper mapper = new ObjectMapper();
 
     public GeolocationInfoRest() {
         this.client = HttpClient.newBuilder().connectTimeout(Duration.of(10, ChronoUnit.SECONDS)).build();
@@ -41,8 +41,7 @@ public class GeolocationInfoRest {
        if (respuesta.statusCode() != 200) {
                 throw new Exception("Respuesta invalida - response code " + respuesta.statusCode());
             }
-            System.out.println("Dentro de geolocation>>>> "+respuesta.body());
-            return new ObjectMapper().readValue(respuesta.body(), GeolocationDTO.class);
+       return new ObjectMapper().readValue(respuesta.body(), GeolocationDTO.class);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             throw new RuntimeException("Error obteniendo info de la ip /" + ip , e);

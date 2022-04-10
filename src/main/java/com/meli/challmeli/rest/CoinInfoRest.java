@@ -4,12 +4,8 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.meli.challmeli.model.coin.CoinDTO;
-import com.meli.challmeli.model.geolocation.GeolocationDTO;
-import io.mikael.urlbuilder.UrlBuilder;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -21,11 +17,11 @@ import java.time.temporal.ChronoUnit;
 @Component
 public class CoinInfoRest {
     @Value("${apis.coinInfo.coinInfoUrl}")
-    private String coinInfoUrl;
+    String coinInfoUrl;
     @Value("${apis.coinInfo.coinInfoToken}")
-    private String coinInfoToken;
-    private HttpClient client;
-    private ObjectMapper mapper = new ObjectMapper();
+    String coinInfoToken;
+    HttpClient client;
+    ObjectMapper mapper = new ObjectMapper();
 
     public CoinInfoRest() {
         this.client = HttpClient.newBuilder()
@@ -44,7 +40,6 @@ public class CoinInfoRest {
             if (respuesta.statusCode() != 200) {
                 throw new Exception("Respuesta invalida - response code " + respuesta.statusCode());
             }
-            System.out.println(respuesta.body());
             return new ObjectMapper().readValue(respuesta.body(), CoinDTO.class);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

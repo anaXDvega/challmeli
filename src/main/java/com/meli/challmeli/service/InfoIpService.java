@@ -13,7 +13,7 @@ import com.meli.challmeli.repository.statistics.StatisticsRepository;
 import com.meli.challmeli.rest.CodCountryRest;
 import com.meli.challmeli.rest.CoinInfoRest;
 import com.meli.challmeli.rest.GeolocationInfoRest;
-import com.meli.challmeli.util.DistanceCalculator;
+import com.meli.challmeli.util.CalculateDistance;
 import com.meli.challmeli.util.IpValidate;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,7 +114,7 @@ public class InfoIpService {
        // dataCountry.setCoin(convertJsonToString(coin,countryCurrencyCode.equals("EUR") ? "USD" : countryCurrencyCode));
         dataCountry.setSuccess("true");
         dataCountry.setCoin(40000.0);
-        dataCountry.setDistanceToBA(!ipInfo.getRegionName().equals("Buenos Aires") ? DistanceCalculator.distance(ipInfo.getLatitude(), ipInfo.getLongitude()) : 0);
+        dataCountry.setDistanceToBA(!ipInfo.getRegionName().equals("Buenos Aires") ? CalculateDistance.distance(ipInfo.getLatitude(), ipInfo.getLongitude()) : 0);
 
 
         buildDistance(dataCountry);

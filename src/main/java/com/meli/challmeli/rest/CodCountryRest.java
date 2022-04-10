@@ -18,9 +18,9 @@ import java.time.temporal.ChronoUnit;
 @Component
 public class CodCountryRest {
     @Value("${apis.countryIo.countryIoUrl}")
-    private String CountryInfoUrl;
-    private HttpClient client;
-    private ObjectMapper mapper = new ObjectMapper();
+    String countryInfoUrl;
+    HttpClient client;
+    ObjectMapper mapper = new ObjectMapper();
 
     public CodCountryRest() {
         this.client = HttpClient.newBuilder()
@@ -29,16 +29,10 @@ public class CodCountryRest {
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
     }
-
-
     public String callOnCountryIo(String path,String codCurrency){
-        URI uri = UrlBuilder.empty().fromString(CountryInfoUrl + path).toUri();
+        URI uri = UrlBuilder.empty().fromString(countryInfoUrl + path).toUri();
         try {
-            var request = HttpRequest.newBuilder(uri)
-                    .timeout(Duration.of(10, ChronoUnit.SECONDS))
-                    .GET()
-                    .build();
-
+            var request = HttpRequest.newBuilder(uri).timeout(Duration.of(10, ChronoUnit.SECONDS)).GET().build();
             var response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() != 200) {
                 throw new Exception("Respuesta invalida - response code " + response.statusCode());
