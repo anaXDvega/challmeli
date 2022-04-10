@@ -5,18 +5,23 @@ import com.meli.challmeli.model.datacountry.DataCountry;
 import com.meli.challmeli.model.geolocation.GeolocationDTO;
 import com.meli.challmeli.rest.CountryIo;
 import com.meli.challmeli.util.CalculateDistance;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+
 import static com.meli.challmeli.util.StringUtil.convertJsonToString;
 
 @Service
 public class DataCountryService {
-    @Autowired
+
     CountryIo countryIo;
 
+    public DataCountryService(CountryIo countryIo) {
+        this.countryIo = countryIo;
+    }
+
     public DataCountry buildDataCountry(GeolocationDTO ipInfo, String countryCurrencyCode, CoinDTO coin) {
+        System.out.println(ipInfo);
         LocalDateTime localDateTimeInUTC = LocalDateTime.now();
         return DataCountry.builder().ip(ipInfo.getIp())
                 .city(ipInfo.getCity())

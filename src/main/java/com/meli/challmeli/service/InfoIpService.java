@@ -1,7 +1,7 @@
 package com.meli.challmeli.service;
 
+import com.meli.challmeli.model.ErrorData.ErrorData;
 import com.meli.challmeli.model.distance.Distance;
-import com.meli.challmeli.model.ErrorData.Error;
 import com.meli.challmeli.model.coin.CoinDTO;
 import com.meli.challmeli.model.datacountry.DataCountry;
 import com.meli.challmeli.model.datacountry.ErrorDataCountry;
@@ -14,28 +14,27 @@ import com.meli.challmeli.service.datacountry.DataCountryService;
 import com.meli.challmeli.service.distance.DistanceService;
 import com.meli.challmeli.service.statistics.StatisticsService;
 import com.meli.challmeli.util.ValidateIP;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
 public class InfoIpService {
-    @Autowired
-    GeolocationInfoRest geolocationInfoRest;
+    private GeolocationInfoRest geolocationInfoRest;
 
-    @Autowired
-    CountryIo countryIo;
+    private CountryIo countryIo;
 
-    @Autowired
-    CoinInfoRest coinInfoRest;
+    private CoinInfoRest coinInfoRest;
 
-    StatisticsService statisticsService;
+    private StatisticsService statisticsService;
 
-    DistanceService distanceService;
+    private DistanceService distanceService;
 
-    DataCountryService dataCountryService;
+    private DataCountryService dataCountryService;
 
-    public InfoIpService(StatisticsService statisticsService, DistanceService distanceService, DataCountryService dataCountryService) {
+    public InfoIpService(GeolocationInfoRest geolocationInfoRest, CountryIo countryIo, CoinInfoRest coinInfoRest, StatisticsService statisticsService, DistanceService distanceService, DataCountryService dataCountryService) {
+        this.geolocationInfoRest = geolocationInfoRest;
+        this.countryIo = countryIo;
+        this.coinInfoRest = coinInfoRest;
         this.statisticsService = statisticsService;
         this.distanceService = distanceService;
         this.dataCountryService = dataCountryService;
@@ -50,13 +49,13 @@ public class InfoIpService {
 
     public Object buildCountry(String ip) {
         GeolocationDTO ipInfo = geolocationInfoRest.listIpInfo(ip);
-        return ipInfo.getSuccess() != null ? buildErrorDataCountry(ipInfo.getError(), "Geolocalizacion") : validationCoin(ipInfo);
+        return ipInfo.getSuccess() != null ? buildErrorDataCountry(ipInfo.getErrorData(), "Geolocalizacion") : validationCoin(ipInfo);
     }
 
     private Object validationCoin(GeolocationDTO ipInfo) {
         String countryCurrencyCode = countryIo.callOnCountryIo("currency.json", ipInfo.getCountryCode());
         var coin = coinInfoRest.buildCoin(countryCurrencyCode.equals("EUR") ? "USD" : countryCurrencyCode);
-        return coin.getSuccess().equals("false") ? buildErrorDataCountry(coin.getError(), "Conversion de moneda") : buildDataCountry(ipInfo, countryCurrencyCode, coin);
+        return coin.getSuccess().equals("false") ? buildErrorDataCountry(coin.getErrorData(), "Conversion de moneda") : buildDataCountry(ipInfo, countryCurrencyCode, coin);
     }
 
     public DataCountry buildDataCountry(GeolocationDTO ipInfo, String countryCurrencyCode, CoinDTO coin) {
@@ -66,7 +65,7 @@ public class InfoIpService {
         return dataCountry;
     }
 
-    private ErrorDataCountry buildErrorDataCountry(Error ipInfo, String module) {
+    private ErrorDataCountry buildErrorDataCountry(ErrorData ipInfo, String module) {
         return new ErrorDataCountry("false",ipInfo.getCode(),ipInfo.getType(),ipInfo.getInfo(),module);
     }
 

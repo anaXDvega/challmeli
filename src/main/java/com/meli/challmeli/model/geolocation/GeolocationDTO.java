@@ -1,7 +1,7 @@
 package com.meli.challmeli.model.geolocation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.meli.challmeli.model.ErrorData.Error;
+import com.meli.challmeli.model.ErrorData.ErrorData;
 import lombok.Data;
 
 
@@ -35,6 +35,6 @@ public class GeolocationDTO {
     private Location location;
     @JsonProperty("success")
     private String success;
-    @JsonProperty("error")
-    private Error error;
+    @JsonProperty("errorData")
+    private ErrorData errorData;
 }

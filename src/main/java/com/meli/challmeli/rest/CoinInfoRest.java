@@ -43,10 +43,10 @@ public class CoinInfoRest {
             return new ObjectMapper().readValue(respuesta.body(), CoinDTO.class);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            throw new RuntimeException("Error obteniendo info del tipo de moneda /" + coin , e);
+            throw new RuntimeException("ErrorData obteniendo info del tipo de moneda /" + coin , e);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Error obteniendo info del tipo de moneda /" + coin , e);
+            throw new RuntimeException("ErrorData obteniendo info del tipo de moneda /" + coin , e);
         }
     }
 

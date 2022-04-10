@@ -1,7 +1,7 @@
 package com.meli.challmeli.model.coin;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.meli.challmeli.model.ErrorData.Error;
+import com.meli.challmeli.model.ErrorData.ErrorData;
 import lombok.Data;
 
 @Data
@@ -16,6 +16,6 @@ public class CoinDTO {
     private String date;
     @JsonProperty("rates")
     private Object rates;
-    @JsonProperty("error")
-    private Error error;
+    @JsonProperty("errorData")
+    private ErrorData errorData;
 }

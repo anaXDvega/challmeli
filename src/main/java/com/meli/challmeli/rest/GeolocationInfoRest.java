@@ -44,10 +44,10 @@ public class GeolocationInfoRest {
        return new ObjectMapper().readValue(respuesta.body(), GeolocationDTO.class);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            throw new RuntimeException("Error obteniendo info de la ip /" + ip , e);
+            throw new RuntimeException("ErrorData obteniendo info de la ip /" + ip , e);
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Error obteniendo info de la ip /" + ip , e);
+            throw new RuntimeException("ErrorData obteniendo info de la ip /" + ip , e);
         }
     }
 }
