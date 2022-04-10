@@ -1,7 +1,8 @@
 function consultarIp(){
 var valorIp = $("#inputIp").val();
 console.log("consultarIp" + valorIp);
-const url = 'http://localhost:8080/registryIp/190.173.136.0';
+const url = 'http://localhost:8080/registryIp/'+ valorIp;
+//190.173.136.0 argentina
 async function fetchAPI(apiURL) {
   let response = await fetch(url);
   let data = await response.json();
@@ -9,7 +10,7 @@ async function fetchAPI(apiURL) {
 }
 fetchAPI(url).then(data => {
     recargo();
-    buildDataCountr(data);
+    buildDataCountry(data);
   console.log('Toda la info: ', data);
 }).catch(error => {console.log(error)});//en caso de algún error
   }
@@ -19,6 +20,43 @@ fetchAPI(url).then(data => {
   	$("#thead").empty();
   	getData();
   }
+  function buscoPromedios(){
+  const url = '/generateStadistics';
+      async function fetchAPI(apiURL) {
+        let response = await fetch(url);
+        let data = await response.json();
+        return data;
+      }
+      fetchAPI(url).then(data => {
+        console.log('Toda la info: ', data);
+      }).catch(error => {console.log(error)});//en caso de algún error
+
+  }
+    function buildDataCountry(data){
+    const tiempoTranscurrido = Date.now();
+    const hoy = new Date(tiempoTranscurrido);
+    var hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+       $('#resultadoIp').append("<p>IP:"+data.ip+", fecha actual: "+hoy.toLocaleDateString() +" " + hora+"<br/> Pais: "+data.country+"<br/>ISO code: "+
+       data.isoCode+"<br/> Idiomas: "+buildIdiomas(data.languages)+ " <br/> Moneda: "+ data.countryCurrencyCode +
+       " (1 "+  getCoinToConvert(data.coinToConvert) +" = "+data.coin + getCountryCurrencyCode(data.countryCurrencyCode) +")<br/> Distancia estimada: "
+       + data.distanceToBA + "kms (-34.687400817871094, -58.56330108642578) a ("+data.latitude+","+ data.longitude+ ")</p>");
+    }
+ function getCoinToConvert(data){
+ if(data=="USD"){return "EUR";}else{return data}
+ }
+ function getCountryCurrencyCode(data){
+  if(data=="EUR"){return "USD";}else{return data}
+  }
+function buildIdiomas(languages){
+let  retorna = "";
+if(languages.length>0){
+  for (var i = 0; i < languages.length; i++) {
+        retorna += " "+languages[i].name+ "("+languages[i].code+") ";
+           }
+}
+return retorna;
+console.log(languages.length);
+}
 function getData(){
  $("#textOutData").hide();
     console.log("Funcion cargada al inicio");
@@ -46,7 +84,7 @@ if(data.length==0){
     thead.insertAdjacentElement("beforeend", tr);
        $('#thead').append("<tr><th>Pais</th><th>Distancia</th><th>Invocaciones</th></tr>");
        for (var i = 0; i < data.length; i++) {
-            $('#tbody').append("<tr id="+data[i].codCountry+"><td>"+data[i].country+"</td><td>"+data[i].distance+"</td><td>"+data[i].invocations+"</td></tr>");
+            $('#tbody').append("<tr id="+data[i].ip+"><td>"+data[i].country+"-"+data[i].city+"</td><td>"+data[i].distance+"Kms</td><td>"+data[i].invocations+"</td></tr>");
            }
 }
 }

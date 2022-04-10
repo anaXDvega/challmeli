@@ -2,8 +2,8 @@ package com.meli.challmeli.util;
 
 public class DistanceCalculator {
 
-    private static final double latitudeBA = -34.687400817871094;
-    private static final double longitudeBA = -58.56330108642578;
+    private static final double latitudeBA = -34.69;
+    private static final double longitudeBA = -58.56;
 
     public static double distance(double lat, double lon) {
         if ((latitudeBA == lat) && (longitudeBA == lon)) {

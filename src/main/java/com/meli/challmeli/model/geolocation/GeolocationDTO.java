@@ -28,9 +28,9 @@ public class GeolocationDTO {
     @JsonProperty("zip")
     private String zip;
     @JsonProperty("latitude")
-    private String latitude;
+    private Double latitude;
     @JsonProperty("longitude")
-    private String longitude;
+    private Double longitude;
     @JsonProperty("location")
     private Location location;
     @JsonProperty("success")

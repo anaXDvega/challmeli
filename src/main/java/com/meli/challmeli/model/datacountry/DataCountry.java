@@ -2,6 +2,7 @@ package com.meli.challmeli.model.datacountry;
 
 import com.meli.challmeli.model.geolocation.Languages;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -15,7 +16,11 @@ public class DataCountry{
     private List<Languages> languages;
     private String countryCurrencyCode;
     private String codeCountry;
-//    private LocalDateTime currentTimeInUTC;
+    private LocalDateTime Time;
+    private Double latitude;
+    private Double longitude;
+    private String coinToConvert;
+    private String geonameId;
 //    private List<LocalDateTime> currentTimes;
     private Double distanceToBA;
     private Double coin;

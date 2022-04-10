@@ -1,4 +1,4 @@
-package com.meli.challmeli.model;
+package com.meli.challmeli.model.datastatistics;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -12,16 +12,16 @@ import javax.persistence.Table;
 @Table
 @Getter
 @Setter
-public class Distance {
+public class DataStatistics {
     @Id
     @Column
-    private Integer geonameId;
+    private int id;
     @Column
-    private String country;
+    private Double average;
     @Column
-    private String city;
+    private Double min;
     @Column
-    private Double distance;
+    private Double max;
     @Column
-    private Integer invocations;
+    private Integer cantInvocations;
 }
