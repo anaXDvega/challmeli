@@ -1,5 +1,5 @@
 package com.meli.challmeli.service;
-import com.meli.challmeli.model.Distance;
+import com.meli.challmeli.model.distance.Distance;
 import com.meli.challmeli.model.ErrorData.Error;
 import com.meli.challmeli.model.coin.CoinDTO;
 import com.meli.challmeli.model.datacountry.DataCountry;
@@ -19,7 +19,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.ArrayList;

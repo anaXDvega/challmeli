@@ -1,6 +1,6 @@
 package com.meli.challmeli.controller;
 
-import com.meli.challmeli.model.Distance;
+import com.meli.challmeli.model.distance.Distance;
 import com.meli.challmeli.service.InfoIpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

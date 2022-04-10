@@ -1,5 +1,5 @@
 package com.meli.challmeli.repository.distance;
-import com.meli.challmeli.model.Distance;
+import com.meli.challmeli.model.distance.Distance;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import java.util.Map;

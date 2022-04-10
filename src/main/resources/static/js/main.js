@@ -11,6 +11,7 @@ async function fetchAPI(apiURL) {
 fetchAPI(url).then(data => {
     recargo();
     buildDataCountry(data);
+    findAverage();
   console.log('Toda la info: ', data);
 }).catch(error => {console.log(error)});//en caso de algún error
   }
@@ -20,7 +21,7 @@ fetchAPI(url).then(data => {
   	$("#thead").empty();
   	getData();
   }
-  function buscoPromedios(){
+  function findAverage(){
   const url = '/generateStadistics';
       async function fetchAPI(apiURL) {
         let response = await fetch(url);
@@ -29,9 +30,17 @@ fetchAPI(url).then(data => {
       }
       fetchAPI(url).then(data => {
         console.log('Toda la info: ', data);
+        buildAverague(data);
       }).catch(error => {console.log(error)});//en caso de algún error
 
   }
+  function buildAverague(data){
+  console.log(data)
+ $('#statistics').append("<p>Cantidad de invocaciones en total: "+data[0].cantInvocations+"<br/>Distancia mas lejana a buenos aires la cual se ha consultado el servicio: "
+ +data[0].max +"<br/> Distancia mas cercana a buenos aires la cual se ha consultado el servicio: "+data[0].min+"<br/>Distancia promedio de todas las ejecuciones: "+
+       data[0].average+"</p>");
+  }
+
     function buildDataCountry(data){
     console.log(data);
     if(data.success=="true"){
