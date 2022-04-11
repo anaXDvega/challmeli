@@ -2,6 +2,7 @@ package com.meli.challmeli.service.data;
 
 import com.meli.challmeli.model.ErrorData.ErrorData;
 import com.meli.challmeli.model.coin.CoinDTO;
+import org.json.JSONObject;
 
 public class CoinData {
     public static CoinDTO buildCoin() {
@@ -11,6 +12,17 @@ public class CoinData {
         coinDTO.setBase("EUR");
         coinDTO.setTimestamp("1649624524");
         coinDTO.setRates("{\"COP\": 4111.021454}");
+        return coinDTO;
+    }
+    public static CoinDTO buildCoinForDataCountry() {
+        CoinDTO coinDTO = new CoinDTO();
+        coinDTO.setSuccess("true");
+        coinDTO.setDate("2022-04-10");
+        coinDTO.setBase("EUR");
+        coinDTO.setTimestamp("1649624524");
+        JSONObject myObject = new JSONObject();
+        myObject.put("COP", 4094.024);
+        coinDTO.setRates(myObject);
         return coinDTO;
     }
 

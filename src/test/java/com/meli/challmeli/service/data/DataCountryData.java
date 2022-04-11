@@ -19,7 +19,7 @@ public class DataCountryData {
         languages2.setNativo("espanol");
         List<Languages> listLanguages=buildList(languages,languages2);
         return DataCountry.builder().ip("190.29.74.10")
-                .city("Ureña")
+                .city("Cucuta")
                 .country("Colombia")
                 .code("57")
                 .isoCode("COP")
@@ -30,7 +30,7 @@ public class DataCountryData {
                 .latitude(54.2222222)
                 .longitude(54.55555555)
                 .coinToConvert("EUR")
-                .geonameId("5568")
+                .geonameId("558")
                 .distanceToBA(588.222222)
                 .coin(4.000)
                 .success("true").build();

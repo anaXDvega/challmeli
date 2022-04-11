@@ -14,14 +14,13 @@ import static com.meli.challmeli.util.StringUtil.convertJsonToString;
 @Service
 public class DataCountryService {
 
-    CountryIo countryIo;
+    private  CountryIo countryIo;
 
     public DataCountryService(CountryIo countryIo) {
         this.countryIo = countryIo;
     }
 
     public DataCountry buildDataCountry(GeolocationDTO ipInfo, String countryCurrencyCode, CoinDTO coin) {
-        System.out.println(ipInfo);
         LocalDateTime localDateTimeInUTC = LocalDateTime.now();
         return DataCountry.builder().ip(ipInfo.getIp())
                 .city(ipInfo.getCity())

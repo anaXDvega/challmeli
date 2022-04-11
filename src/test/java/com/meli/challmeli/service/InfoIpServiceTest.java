@@ -54,7 +54,6 @@ class InfoIpServiceTest {
         when(coinInfoRest.buildCoin(any())).thenReturn(CoinData.buildCoin());
         when(dataCountryService.buildDataCountry(GeolocationData.buildRequestGeolocation(),"COP", CoinData.buildCoin())).thenReturn(DataCountryData.buildDataCountrySuccess());
         Object response = infoIpService.countryInfoComplete(ip);
-        assertNotNull(response);
         assertTrue(response instanceof DataCountry);
         DataCountry dataCountry = (DataCountry) response;
         assertEquals(dataCountry.getIp(), ip);

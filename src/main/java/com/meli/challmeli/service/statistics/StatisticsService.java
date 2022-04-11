@@ -2,7 +2,6 @@ package com.meli.challmeli.service.statistics;
 import com.meli.challmeli.model.datastatistics.DataStatistics;
 import com.meli.challmeli.model.distance.Distance;
 import com.meli.challmeli.repository.statistics.StatisticsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -12,8 +11,11 @@ import java.util.Optional;
 @Service
 public class StatisticsService {
 
-    @Autowired
-    StatisticsRepository statisticsRepository;
+   private StatisticsRepository statisticsRepository;
+
+    public StatisticsService(StatisticsRepository statisticsRepository) {
+        this.statisticsRepository = statisticsRepository;
+    }
 
     public DataStatistics save(DataStatistics dataStatistics){
         return statisticsRepository.save(dataStatistics);
