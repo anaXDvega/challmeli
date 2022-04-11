@@ -6,12 +6,25 @@ plugins {
 
 group = 'com.meli'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+jar {
+	enabled= false
+}
+
+bootJar {
+	enabled= true
+}
 
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
+}
+
+springBoot{
+	buildInfo()
 }
 
 repositories {
@@ -32,6 +45,7 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
 }
 
 tasks.named('test') {

@@ -1,7 +1,7 @@
 function consultarIp(){
 var valorIp = $("#inputIp").val();
 console.log("consultarIp" + valorIp);
-const url = 'http://localhost:8080/registryIp/'+ valorIp;
+const url = '/registryIp/'+ valorIp;
 //190.173.136.0 argentina
 async function fetchAPI(apiURL) {
   let response = await fetch(url);
