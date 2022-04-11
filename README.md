@@ -3,7 +3,7 @@
 
 ## Correr Proyecto
 
-Se debe tener instalado gradle y docker (docker-compose)
+Se debe tener instalado gradle y docker 
 
 - clonar proyecto
 - Ejecutar la siguientes sentencias 
