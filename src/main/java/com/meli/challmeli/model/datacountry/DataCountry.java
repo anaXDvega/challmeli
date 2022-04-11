@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 public class DataCountry{
     private String ip;
-    private String city;
+    private String regionName;
     private String country;
     private String code;
     private String isoCode;

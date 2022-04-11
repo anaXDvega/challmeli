@@ -20,7 +20,7 @@ public class Distance {
     @Column
     private String country;
     @Column
-    private String city;
+    private String regionName;
     @Column
     private Double distance;
     @Column

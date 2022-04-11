@@ -13,23 +13,24 @@ import com.meli.challmeli.rest.GeolocationInfoRest;
 import com.meli.challmeli.service.datacountry.DataCountryService;
 import com.meli.challmeli.service.distance.DistanceService;
 import com.meli.challmeli.service.statistics.StatisticsService;
-import com.meli.challmeli.util.ValidateIP;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
+import static com.meli.challmeli.util.Constant.*;
+
 @Service
 public class InfoIpService {
-    private GeolocationInfoRest geolocationInfoRest;
+    private final GeolocationInfoRest geolocationInfoRest;
 
-    private CountryIo countryIo;
+    private final CountryIo countryIo;
 
-    private CoinInfoRest coinInfoRest;
+    private final CoinInfoRest coinInfoRest;
 
-    private StatisticsService statisticsService;
+    private final StatisticsService statisticsService;
 
-    private DistanceService distanceService;
+    private final DistanceService distanceService;
 
-    private DataCountryService dataCountryService;
+    private final DataCountryService dataCountryService;
 
     public InfoIpService(GeolocationInfoRest geolocationInfoRest, CountryIo countryIo, CoinInfoRest coinInfoRest, StatisticsService statisticsService, DistanceService distanceService, DataCountryService dataCountryService) {
         this.geolocationInfoRest = geolocationInfoRest;
@@ -41,21 +42,14 @@ public class InfoIpService {
     }
 
     public Object countryInfoComplete(String ip) {
-        if (!ValidateIP.validateIPAddress(ip)) {
-            throw new RuntimeException("La ip ingresada no es correcta");
-        }
-        return buildCountry(ip);
-    }
-
-    public Object buildCountry(String ip) {
         GeolocationDTO ipInfo = geolocationInfoRest.listIpInfo(ip);
-        return ipInfo.getSuccess() != null ? buildErrorDataCountry(ipInfo.getErrorData(), "Geolocalizacion") : validationCoin(ipInfo);
+        return ipInfo.getSuccess() != null ? buildErrorDataCountry(ipInfo.getErrorData(), GEOLOCALIZACION) : validationCoin(ipInfo);
     }
 
     private Object validationCoin(GeolocationDTO ipInfo) {
-        String countryCurrencyCode = countryIo.callOnCountryIo("currency.json", ipInfo.getCountryCode());
-        var coin = coinInfoRest.buildCoin(countryCurrencyCode.equals("EUR") ? "USD" : countryCurrencyCode);
-        return coin.getSuccess().equals("false") ? buildErrorDataCountry(coin.getErrorData(), "Conversion de moneda") : buildDataCountry(ipInfo, countryCurrencyCode, coin);
+        String countryCurrencyCode = countryIo.callOnCountryIo(CURRENCY, ipInfo.getCountryCode());
+        var coin = coinInfoRest.buildCoin(countryCurrencyCode.equals(EUR) ? USD : countryCurrencyCode);
+        return coin.getSuccess().equals("false") ? buildErrorDataCountry(coin.getErrorData(), CONVERSIONMONEDAMODULO) : buildDataCountry(ipInfo, countryCurrencyCode, coin);
     }
 
     public DataCountry buildDataCountry(GeolocationDTO ipInfo, String countryCurrencyCode, CoinDTO coin) {

@@ -1,6 +1,7 @@
 function consultarIp(){
 var valorIp = $("#inputIp").val();
-console.log("consultarIp" + valorIp);
+validateIp(valorIp);
+if(validateIp(valorIp)){
 const url = '/registryIp/'+ valorIp;
 //190.173.136.0 argentina
 async function fetchAPI(apiURL) {
@@ -16,7 +17,10 @@ fetchAPI(url).then(data => {
 }).catch(error => {
 alert(error)});//en caso de algún error
   }
-  function recargo(){
+else{
+alert("ip incorrecta")//en caso de algún error
+}
+}  function recargo(){
     $("#resultadoIp").empty();
     $("#statistics").empty();
   	$("#tbody").empty();
@@ -52,7 +56,7 @@ alert(error)});//en caso de algún error
        $('#resultadoIp').append("<p>IP:"+data.ip+", fecha actual: "+hoy.toLocaleDateString() +" " + hora+"<br/> Pais: "+data.country+"<br/>ISO code: "+
        data.isoCode+"<br/> Idiomas: "+buildIdiomas(data.languages)+ " <br/> Moneda: "+ data.countryCurrencyCode +
        " (1 "+  getCoinToConvert(data.coinToConvert) +" = "+data.coin + getCountryCurrencyCode(data.countryCurrencyCode) +")<br/> Distancia estimada: "
-       + data.distanceToBA + "kms (-34.687400817871094, -58.56330108642578) a ("+data.latitude+","+ data.longitude+ ")</p>");
+       + data.distanceToBA + "kms (-34.687, -58.563) a ("+data.latitude+","+ data.longitude+ ")</p>");
        }else{
         $('#resultadoIp').append("<p>Codigo de error:"+data.code+"<br/> Info del error: "+data.info +"<br/> Modulo:" + data.module+"<br/> Tipo: "+data.type+"</p>");
        }
@@ -99,7 +103,7 @@ if(data.length==0){
     thead.insertAdjacentElement("beforeend", tr);
        $('#thead').append("<tr><th>Pais</th><th>Distancia</th><th>Invocaciones</th></tr>");
        for (var i = 0; i < data.length; i++) {
-            $('#tbody').append("<tr id="+data[i].ip+"><td>"+data[i].country+"-"+data[i].city+"</td><td>"+data[i].distance+"Kms</td><td>"+data[i].invocations+"</td></tr>");
+            $('#tbody').append("<tr id="+data[i].ip+"><td>"+data[i].country+"-"+data[i].regionName+"</td><td>"+data[i].distance+"Kms</td><td>"+data[i].invocations+"</td></tr>");
            }
 }
 }

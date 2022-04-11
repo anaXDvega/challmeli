@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class StatisticsService {
 
-   private StatisticsRepository statisticsRepository;
+   private final StatisticsRepository statisticsRepository;
 
     public StatisticsService(StatisticsRepository statisticsRepository) {
         this.statisticsRepository = statisticsRepository;

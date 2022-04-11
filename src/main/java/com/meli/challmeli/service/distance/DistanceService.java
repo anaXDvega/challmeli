@@ -10,7 +10,7 @@ import java.util.Map;
 @Service
 public class DistanceService {
 
-    private DistanceRepository distanceRepository;
+    private final DistanceRepository distanceRepository;
 
     public DistanceService(DistanceRepository distanceRepository) {
         this.distanceRepository = distanceRepository;
@@ -27,8 +27,8 @@ public class DistanceService {
         var getIfExists = distanceRepository.findById(Integer.valueOf(dataCountry.getGeonameId()));
         Distance distance = Distance.builder().geonameId(Integer.valueOf(dataCountry.getGeonameId()))
                 .country(dataCountry.getCountry())
-                .city(dataCountry.getCity())
-                .distance(Double.valueOf(dataCountry.getDistanceToBA()))
+                .regionName(dataCountry.getRegionName())
+                .distance(dataCountry.getDistanceToBA())
                 .invocations(!getIfExists.isEmpty() ? getIfExists.get().getInvocations()+ 1 :  1).build();
        return distanceRepository.save(distance);
     }

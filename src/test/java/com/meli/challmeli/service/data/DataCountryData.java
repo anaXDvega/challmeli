@@ -19,7 +19,7 @@ public class DataCountryData {
         languages2.setNativo("espanol");
         List<Languages> listLanguages=buildList(languages,languages2);
         return DataCountry.builder().ip("190.29.74.10")
-                .city("Cucuta")
+                .regionName("Cucuta")
                 .country("Colombia")
                 .code("57")
                 .isoCode("COP")
