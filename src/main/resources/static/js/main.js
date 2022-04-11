@@ -13,7 +13,8 @@ fetchAPI(url).then(data => {
     buildDataCountry(data);
     findAverage();
   console.log('Toda la info: ', data);
-}).catch(error => {console.log(error)});//en caso de algún error
+}).catch(error => {
+alert(error)});//en caso de algún error
   }
   function recargo(){
     $("#resultadoIp").empty();
@@ -32,7 +33,7 @@ fetchAPI(url).then(data => {
       fetchAPI(url).then(data => {
         console.log('Toda la info: ', data);
         buildAverague(data);
-      }).catch(error => {console.log(error)});//en caso de algún error
+      }).catch(error => {alert(error)});//en caso de algún error
 
   }
   function buildAverague(data){
