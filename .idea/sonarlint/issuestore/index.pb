@@ -25,8 +25,6 @@ Esrc/main/java/com/meli/challmeli/controller/StadisticsController.java,b\e\be13
 settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
-9
-	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 :
 
 Dockerfile,6\6\6651ddff6eb82c840ced7c1dddee15c6e1913dd4
