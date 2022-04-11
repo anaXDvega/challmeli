@@ -50,6 +50,7 @@ class StatisticsServiceTest {
         when(statisticsRepository.findById(any())).thenReturn(Optional.of(buildDataStatistics()));
         Optional<DataStatistics> response = statisticsService.findById(1);
         assertEquals(response.get().getMin(), 15.55);
+        assertEquals(response.get().getMax(), 15.5555500);
     }
     @Test
     void updateStatistics() {

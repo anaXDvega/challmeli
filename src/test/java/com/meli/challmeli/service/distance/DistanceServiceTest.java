@@ -1,6 +1,7 @@
 package com.meli.challmeli.service.distance;
 
 import com.meli.challmeli.model.datacountry.DataCountry;
+import com.meli.challmeli.model.datastatistics.DataStatistics;
 import com.meli.challmeli.model.distance.Distance;
 import com.meli.challmeli.repository.distance.DistanceRepository;
 import com.meli.challmeli.rest.CountryIo;
@@ -17,8 +18,11 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.Map;
 import java.util.Optional;
 
+import static com.meli.challmeli.service.data.DataStatisticData.buildDataStatistics;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;

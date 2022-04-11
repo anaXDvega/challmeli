@@ -15,7 +15,8 @@ apis:
       countryIoUrl: "http://country.io/"
     coinInfo:
       coinInfoUrl: "http://data.fixer.io/api/"
-      coinInfoToken: "e46ea8bd7df0b60acb1da7709e32260a"
+      coinInfoToken: "cfca47e05f90ae5c47491daea6bdb416"
+      #coinInfoToken: "e46ea8bd7df0b60acb1da7709e32260a"
 #
 #redis:
 #  host: redis

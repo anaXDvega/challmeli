@@ -1,8 +1,6 @@
 
 v
 Fsrc/main/java/com/meli/challmeli/model/infocountry/InfoCountryDTO.java,2\c\2c0f84cc8051fd2ada28b529abc909209ef993e4
-y
-Isrc/main/java/com/meli/challmeli/model/datastatistics/DataStatistics.java,b\8\b83afc008ebbfca7daf37f54354addd8b4bb69e8
 p
 @src/main/java/com/meli/challmeli/model/geolocation/Location.java,b\d\bdde45743ebb696299cc111cdc2a194e420e90a1
 x
@@ -13,16 +11,10 @@ o
 ?src/main/java/com/meli/challmeli/model/ErrorData/ErrorData.java,e\7\e775ebcac3146e16ebfeee77dd808e2b02aa69d2
 h
 8src/main/java/com/meli/challmeli/model/coin/CoinDTO.java,4\4\44b2a70b70d7e7bf7212254f19d3685a3cfdf27f
-~
-Nsrc/test/java/com/meli/challmeli/service/statistics/StatisticsServiceTest.java,2\c\2cda39e23b8abdf0ec195f504341eb0dd201e9e8
-m
-=src/main/java/com/meli/challmeli/controller/IpController.java,a\1\a15f5da6daf7b95be3e35dd833da0447cd5e9f69
 k
 ;src/test/java/com/meli/challmeli/rest/CoinInfoRestTest.java,5\a\5a147b09fab97219e0d961b55cc2e019bf3af9c8
 h
 8src/test/java/com/meli/challmeli/rest/CountryIoTest.java,c\9\c91cb02799a7acd3bfc5fa19cc4443145b6ffe44
-z
-Jsrc/test/java/com/meli/challmeli/service/distance/DistanceServiceTest.java,b\b\bbe23971e2a7eeff8b2530f29dced27eeb666a93
 r
 Bsrc/test/java/com/meli/challmeli/rest/GeolocationInfoRestTest.java,8\f\8fba64526d66a6799d67f4b7d1aace99cbaaf33a
 u
@@ -31,3 +23,32 @@ Esrc/main/java/com/meli/challmeli/controller/StadisticsController.java,b\e\be13
 gradlew.bat,2\a\2a45a911a8f1836b0b6c5b758962572012d8f8c3
 ?
 settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233
+<
+build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+:
+
+Dockerfile,6\6\6651ddff6eb82c840ced7c1dddee15c6e1913dd4
+v
+Fsrc/main/java/com/meli/challmeli/model/geolocation/GeolocationDTO.java,f\c\fc2c266abdd9a83fd8f9ebe53a0297d49c5268c6
+€
+Psrc/main/java/com/meli/challmeli/repository/statistics/StatisticsRepository.java,3\b\3bfbb2944cf2bef9268f6b9494a9e702743b3e67
+g
+7src/main/java/com/meli/challmeli/rest/CoinInfoRest.java,5\e\5e87d8eb3da83f1e6a0183a5a81d7da5276dc729
+d
+4src/main/java/com/meli/challmeli/rest/CountryIo.java,6\5\653e0e19a17614dc2fc8c4b3c271013789edec0c
+e
+5src/main/java/com/meli/challmeli/util/StringUtil.java,1\b\1b41574aabaa64816d6c1494e799d2b91fd6298f
+l
+<src/main/java/com/meli/challmeli/util/CalculateDistance.java,c\1\c1dd085cf656c8704e655e4b1882278f6d9eeab8
+c
+3src/main/java/com/meli/challmeli/util/Constant.java,2\e\2efdf00d24a81943eb4f697e69a9f6815b970bcc
+s
+Csrc/main/java/com/meli/challmeli/model/datacountry/DataCountry.java,2\a\2aa0987f20e9dcce505f349129ade9e013a005cd
+r
+Bsrc/test/java/com/meli/challmeli/service/data/DataCountryData.java,9\2\920be9ff8d8bbaf6acbea63be346f8af3eb76767
+g
+7src/main/java/com/meli/challmeli/util/DecimalsUtil.java,e\7\e79dd9519f7e726abc78b3fd11ac2a2b9a14cff9
+m
+=src/main/java/com/meli/challmeli/model/distance/Distance.java,b\8\b83b7720afa152dbc8c8587764876e238466de7b
