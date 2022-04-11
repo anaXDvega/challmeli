@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.meli.challmeli.rest.GeolocationInfoRestTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-04-11T00:57:40" hostname="ANAVEGA" time="0.211">
+  <properties/>
+  <testcase name="listIpInfo()" classname="com.meli.challmeli.rest.GeolocationInfoRestTest" time="0.211"/>
+  <system-out><![CDATA[2022-04-10 19:57:39.982  INFO 18312 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.meli.challmeli.rest.GeolocationInfoRestTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2022-04-10 19:57:39.990  INFO 18312 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2022-04-10 19:57:39.991  INFO 18312 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@45bb502f, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@7aac6d13, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@7e34e466, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@2a8eed58, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@352bea0e, org.springframework.test.context.support.DirtiesContextTestExecutionListener@2cf6dd4d, org.springframework.test.context.transaction.TransactionalTestExecutionListener@75381b61, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@2801ccb3, org.springframework.test.context.event.EventPublishingTestExecutionListener@42102827, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@5896899d, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@6d4062fd, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@4b024fb2, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@89017e5, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@6426ad0b, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@a9f7cf8]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.6.6)
+
+2022-04-10 19:57:40.046  WARN 18312 --- [    Test worker] ory$DuplicateJsonObjectContextCustomizer : 
+
+Found multiple occurrences of org.json.JSONObject on the class path:
+
+	jar:file:/C:/Users/Ana-Vega/.gradle/caches/modules-2/files-2.1/org.json/json/20171018/36ced462c97f0845b4a7b266a25cebe95d18baa3/json-20171018.jar!/org/json/JSONObject.class
+	jar:file:/C:/Users/Ana-Vega/.gradle/caches/modules-2/files-2.1/com.vaadin.external.google/android-json/0.0.20131108.vaadin1/fa26d351fe62a6a17f5cda1287c1c6110dec413f/android-json-0.0.20131108.vaadin1.jar!/org/json/JSONObject.class
+
+You may wish to exclude one of them to ensure predictable runtime behavior
+
+2022-04-10 19:57:40.048  INFO 18312 --- [    Test worker] c.m.c.rest.GeolocationInfoRestTest       : Starting GeolocationInfoRestTest using Java 11.0.13 on AnaVega with PID 18312 (started by Ana-Vega in C:\Desarrollo\challmeli)
+2022-04-10 19:57:40.049  INFO 18312 --- [    Test worker] c.m.c.rest.GeolocationInfoRestTest       : No active profile set, falling back to 1 default profile: "default"
+2022-04-10 19:57:40.077  INFO 18312 --- [    Test worker] c.m.c.rest.GeolocationInfoRestTest       : Started GeolocationInfoRestTest in 0.083 seconds (JVM running for 19.617)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

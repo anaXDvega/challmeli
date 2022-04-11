@@ -14,7 +14,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootConfiguration
@@ -30,5 +29,7 @@ class DataCountryServiceTest {
     void buildDataCountrySuccess() {
         when(countryIo.callOnCountryIo("iso3.json", "57")).thenReturn("COL");
         DataCountry response = dataCountryService.buildDataCountry(GeolocationData.buildRequestGeolocation(),"COP", CoinData.buildCoinForDataCountry());
+        assertEquals(response.getSuccess(), "true");
+        assertEquals(response.getIsoCode(), "COL");
     }
 }

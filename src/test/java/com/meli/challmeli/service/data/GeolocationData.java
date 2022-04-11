@@ -17,8 +17,10 @@ public class GeolocationData {
         geolocationDTO.setType("ipv4");
         geolocationDTO.setContinentCode("SA");
         geolocationDTO.setContinentName("South America");
+        geolocationDTO.setCountryCode("57");
         geolocationDTO.setRegionCode("NAR");
         geolocationDTO.setRegionName("Nariño");
+        geolocationDTO.setCountryName("Colombia");
         geolocationDTO.setCity("Ureña");
         geolocationDTO.setZip("540018");
         geolocationDTO.setLatitude(7.978390216827393);
